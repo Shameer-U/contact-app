@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Routes, Route } from "react-router-dom";
 import { uuid } from "uuidv4";
 import './App.css';
 import Header from "./Header";
 import AddContact from "./AddContact";
 import ContactList from "./ContactList";
+import ContactDetails from "./ContactDetails";
 
 function App() {
   // const contacts = [
@@ -45,9 +47,16 @@ function App() {
 
   return (
       <div className="ui container">
-        <Header />
-        <AddContact addContactHandler={addContactHandler} /> 
-        <ContactList contacts={contacts} getContactId={removeContactHandler} />
+        {/* <Header /> */}
+        <Router>
+            <Routes>
+              <Route path="/add" element={ <AddContact addContactHandler={addContactHandler} /> } />
+              <Route path="/" element={ <ContactList contacts={contacts} getContactId={removeContactHandler} />} />
+              <Route path="/contact/:id" element={ <ContactDetails />} />
+            </Routes>
+            {/* <AddContact addContactHandler={addContactHandler} /> 
+            <ContactList contacts={contacts} getContactId={removeContactHandler} /> */}
+        </Router>
       </div>
   );
 }
