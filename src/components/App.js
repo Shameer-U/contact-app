@@ -23,7 +23,7 @@ function App() {
 
   const addContactHandler = (contact) => {
     console.log(contact);
-    setContacts([...contacts, { id: uuid(), ...contact }]);
+    setContacts([...contacts, { id: Date.now(), ...contact }]);
   }
 
   const removeContactHandler = (id) => {
