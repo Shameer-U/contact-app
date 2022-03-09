@@ -7,6 +7,7 @@ import Header from "./Header";
 import AddContact from "./AddContact";
 import ContactList from "./ContactList";
 import ContactDetails from "./ContactDetails";
+import EditContact from "./EditContact";
 
 function App() {
   // const contacts = [
@@ -50,6 +51,17 @@ function App() {
   //     setContacts(newContactList);
   // };
 
+  const updateContactHandler = async (contact) => {
+    const response = await api.put(`/contacts/${contact.id}`, contact);
+    const { id, name, email } = response.data;
+    
+    setContacts(
+      contacts.map((contact) => {
+        return contact.id === id ? { ...response.data } : contact;
+      })
+    );
+  };
+
   const removeContactHandler = async (id) => {
     await api.delete(`/contacts/${id}`);
     console.log(contacts);
@@ -85,6 +97,7 @@ function App() {
               <Route path="/add" element={ <AddContact addContactHandler={addContactHandler} /> } />
               <Route path="/" element={ <ContactList contacts={contacts} getContactId={removeContactHandler} />} />
               <Route path="/contact/:id" element={ <ContactDetails />} />
+              <Route path="/edit" element={ <EditContact updateContactHandler={ updateContactHandler } /> } />
             </Routes>
             {/* <AddContact addContactHandler={addContactHandler} /> 
             <ContactList contacts={contacts} getContactId={removeContactHandler} /> */}
